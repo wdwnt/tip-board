@@ -32,4 +32,4 @@ app.get('/shdr', function (req, res) {
     res.sendFile(__dirname + '/public/index_shdr.html');
 });
 
-app.listen(8000);
+app.listen(process.env.port || 8000);
