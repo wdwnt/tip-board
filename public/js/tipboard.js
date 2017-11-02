@@ -25,19 +25,24 @@ var TipBoard = (function () {
     }
 
     function getCurrentTime() {
-        $.ajax({
-            url: 'https://api.timezonedb.com/v2/get-time-zone?key=GUJDKZPFN9JW&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json',
-            success: function (data) {
-                var date = new Date(data.formatted);
-                var language = window.navigator.language;
+        var timeZoneApiKey = process.env.time_zone_api_key || '';
+        if (timeZoneApiKey === '') {
+            return;
+        } else {
+            $.ajax({
+                url: 'https://api.timezonedb.com/v2/get-time-zone?key=' + timeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json',
+                success: function (data) {
+                    var date = new Date(data.formatted);
+                    var language = window.navigator.language;
 
-                var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
-                var currentMonthAndDay = date.toLocaleString(language, { month: 'long', day: '2-digit' });
-                $('#current-date').html(currentDayOfWeek + '<br />' + currentMonthAndDay);
+                    var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
+                    var currentMonthAndDay = date.toLocaleString(language, { month: 'long', day: '2-digit' });
+                    $('#current-date').html(currentDayOfWeek + '<br />' + currentMonthAndDay);
 
-                $('#current-time').html(date.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit' }));
-            }
-        });
+                    $('#current-time').html(date.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit' }));
+                }
+            });
+        }
     }
 
     function getWeather() {
@@ -79,7 +84,7 @@ var TipBoard = (function () {
 
     function updateMainContent() {
         currentParkIndex++;
-        if (currentParkIndex > parkHoursData.length) {
+        if (currentParkIndex >= parkHoursData.length) {
             currentParkIndex = 0;
         }
 
