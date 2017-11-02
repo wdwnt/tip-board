@@ -1,5 +1,5 @@
 var TipBoard = (function () {
-    var thisAudioPlayer, thisDestination, latitude, longitude;
+    var thisAudioPlayer, thisDestination, thisTimeZoneApiKey, latitude, longitude;
     var baseMp3Url = 'https://wdwntnow.oseast-us-1.phoenixnap.com/music/today_at_wdw/';
     var songIndex = 1;
     var parkHoursData = [];
@@ -25,12 +25,11 @@ var TipBoard = (function () {
     }
 
     function getCurrentTime() {
-        var timeZoneApiKey = process.env.time_zone_api_key || '';
-        if (timeZoneApiKey === '') {
+        if (thisTimeZoneApiKey === undefined || thisTimeZoneApiKey === '') {
             return;
         } else {
             $.ajax({
-                url: 'https://api.timezonedb.com/v2/get-time-zone?key=' + timeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json',
+                url: 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json',
                 success: function (data) {
                     var date = new Date(data.formatted);
                     var language = window.navigator.language;
@@ -95,9 +94,10 @@ var TipBoard = (function () {
         $('#hours').html(currentPark.todaysHours);
     }
 
-    function init(audioPlayer, destination) {
+    function init(audioPlayer, destination, timeZoneApiKey) {
         thisAudioPlayer = audioPlayer;
         thisDestination = destination;
+        thisTimeZoneApiKey = timeZoneApiKey;
 
         setupAudioPlayer();
         getWeather();
