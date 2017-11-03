@@ -20,6 +20,13 @@ body {
     display: flex;
 }
 
+#itinerary {
+    bottom: 0;
+    font-size: 3vw;
+    margin-bottom: 24px;
+    position: fixed;
+}
+
 #main-content {
     flex-grow: 1;
     margin: 48px;

@@ -16,6 +16,7 @@
             <h1 id="park-name"></h1>
             <h2 id="todays-park-hours-label">Today's Park Hours</h2>
             <h2 id="hours"></h2>
+            <div id="itinerary"></div>
         </div>
         <div id="right-content">
             <div id="current-date" class="info date"></div>
@@ -26,8 +27,10 @@
     </div>
     <audio id="audio-player" autoplay></audio>
     <script src="/static/js/tipboard.js"></script>
+    <script src="/static/js/itinerary.js"></script>
     <script>
         TipBoard.Initialize($('#audio-player'), 'wdw', '<%=timeZoneApiKey%>', 28.4160036778, -81.5811902834);
+        Itinerary.Initialize($('#itinerary'));
     </script>
 </body>
 

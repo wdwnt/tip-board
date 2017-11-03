@@ -7,7 +7,7 @@ var TipBoard = (function () {
 
     function buildSongUrl() {
         return baseMp3Url + songIndex + '.mp3';
-    }
+    };
 
     function setupAudioPlayer() {
         var audioPlayer = document.getElementById('audio-player');
@@ -22,7 +22,7 @@ var TipBoard = (function () {
             audioPlayer.load();
             audioPlayer.play();
         }, false);
-    }
+    };
 
     function getCurrentTime() {
         if (thisTimeZoneApiKey === undefined || thisTimeZoneApiKey === '') {
@@ -46,7 +46,7 @@ var TipBoard = (function () {
                 }
             });
         }
-    }
+    };
 
     function getWeather() {
         $.ajax({
@@ -57,7 +57,7 @@ var TipBoard = (function () {
                 $('#current-weather').html(weather);
             }
         });
-    }
+    };
 
     function getParkHours() {
         $.ajax({
@@ -66,7 +66,7 @@ var TipBoard = (function () {
                 updateParkHoursData(data);
             }
         });
-    }
+    };
 
     function updateParkHoursData(data) {
         parkHoursData = data;
@@ -79,7 +79,7 @@ var TipBoard = (function () {
         });
 
         $('#parks').html(output);
-    }
+    };
 
     function updateMainContent() {
         currentParkIndex++;
@@ -92,7 +92,7 @@ var TipBoard = (function () {
         $('#park-name').html(currentPark.name);
         $('#todays-park-hours-label').show();
         $('#hours').html(currentPark.todaysHours);
-    }
+    };
 
     function init(audioPlayer, destination, timeZoneApiKey, latitude, longitude) {
         thisAudioPlayer = audioPlayer;
