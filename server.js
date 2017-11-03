@@ -58,12 +58,12 @@ app.get('/fastpass', function (req, res) {
         .then(function (response) {
             var token = JSON.parse(response)
             var fpRequest = {
-                url: 'https://api.wdpro.disney.go.com/reservation-service/itinerary-items/' + token.swid + '?guest-locators=' + process.env.mdx_xid + '%3Btype%3Dxid&item-types=RESORT&item-types=DINING&item-types=FASTPASS&item-types=NON_BOOKABLE&item-types=PERSONAL_SCHEDULE&start-date=2017-11-02&end-date=2018-11-02&guest-role=PARTICIPANT&guest-locator-groups=MY_FAMILY&destination=WDW',
+                url: 'https://api.wdpro.disney.go.com/reservation-service/itinerary-items/' + token.swid + '?guest-locators=' + process.env.mdx_xid + '%3Btype%3Dxid&item-types=RESORT&item-types=DINING&item-types=FASTPASS&item-types=NON_BOOKABLE&item-types=PERSONAL_SCHEDULE&start-date=2017-11-02&end-date=2018-11-02&guest-role=PARTICIPANT&destination=WDW',
                 headers: {
                     'Authorization': 'Bearer ' + token.access_token
                 }
             };
-
+			
             request(fpRequest)
                 .then(function (fpResponse) {
                     var fpResponseItems = JSON.parse(fpResponse).items;
