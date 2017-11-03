@@ -34,16 +34,9 @@ var TipBoard = (function () {
             $.ajax({
                 url: timezoneUrl,
                 success: function (data) {
-                    // var date = new Date(data.formatted);
+					
+                    var date = new Date(data.formatted);
                     var language = window.navigator.language;
-
-					alert("data.formatted: " + data.formatted);
-					var date = new Date(data.formatted);
-					if (date === undefined || date === null) {
-						alert("date obj is invalid");
-					} else {
-						alert("date obj is valid");
-					}
 					
                     var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
                     var currentMonthAndDay = date.toLocaleString(language, { month: 'long', day: '2-digit' });
