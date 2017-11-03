@@ -72,9 +72,28 @@ app.get('/fastpass', function (req, res) {
                     for (var i = 0; i < fpResponseItems.length; i++) {
                         var currentItem = fpResponseItems[i];
                         if (currentItem.type === "RESORT") {
-                            items.push({ facility: currentItem.accommodations[0].facility });
+                            items.push({
+                                id: parseInt(currentItem.accommodations[0].facility.split(';')[0]),
+                                name: '',
+                                startDateTime: currentItem.startDateTime,
+                                endDateTime: currentItem.endDateTime,
+                                type: 'resort'
+                            });
                         } else if (currentItem.type === "FASTPASS") {
-                            items.push({ facility: currentItem.facility });
+                            items.push({
+                                id: parseInt(currentItem.facility.split(';')[0]),
+                                name: '',
+                                startDateTime: currentItem.startDateTime,
+                                endDateTime: currentItem.endDateTime,
+                                type: currentItem.facility.split('=')[1]
+                            });
+                        } else if (currentItem.type === "DINING") {
+                            items.push({
+                                id: parseInt(currentItem.asset.split(';')[0]),
+                                name: '',
+                                startDateTime: currentItem.startDateTime,
+                                type: currentItem.asset.split('=')[1]
+                            });
                         }
                     }
 
