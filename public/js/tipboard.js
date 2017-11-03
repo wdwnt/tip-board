@@ -30,16 +30,6 @@ var TipBoard = (function () {
         } else {
 			
 			var timezoneUrl = 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json';
-		
-			alert("data.formatted: " + data.formatted);
-		
-			var date = new Date(data.formatted);
-		
-			if (date === undefined || date === null) {
-				alert("date obj is invalid");
-			} else {
-				alert("date obj is valid");
-			}
 			
             $.ajax({
                 url: timezoneUrl,
@@ -47,6 +37,14 @@ var TipBoard = (function () {
                     // var date = new Date(data.formatted);
                     var language = window.navigator.language;
 
+					alert("data.formatted: " + data.formatted);
+					var date = new Date(data.formatted);
+					if (date === undefined || date === null) {
+						alert("date obj is invalid");
+					} else {
+						alert("date obj is valid");
+					}
+					
                     var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
                     var currentMonthAndDay = date.toLocaleString(language, { month: 'long', day: '2-digit' });
                     $('#current-date').html(currentDayOfWeek + '<br />' + currentMonthAndDay);
