@@ -35,7 +35,8 @@ var TipBoard = (function () {
                 url: timezoneUrl,
                 success: function (data) {
 					
-                    var date = new Date(data.formatted);
+                    //var date = new Date(data.formatted);
+					var date = new Date();
                     var language = window.navigator.language;
 					
                     var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
