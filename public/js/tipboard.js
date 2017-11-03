@@ -28,8 +28,16 @@ var TipBoard = (function () {
         if (thisTimeZoneApiKey === undefined || thisTimeZoneApiKey === '') {
             return;
         } else {
+			
+			var timezoneUrl = 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json';
+			
+			alert(
+				"timezone url: " + timezoneUrl + "\n" +
+				"language: " + window.navigator.language + "\n"
+			);
+			
             $.ajax({
-                url: 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json',
+                url: timezoneUrl,
                 success: function (data) {
                     var date = new Date(data.formatted);
                     var language = window.navigator.language;
