@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var request = require('request-promise');
+var facilities = require('./facilities');
 
 app.set('view engine', 'ejs');
 app.use('/static', express.static(__dirname + '/public'));
@@ -63,38 +64,25 @@ app.get('/fastpass', function (req, res) {
                     'Authorization': 'Bearer ' + token.access_token
                 }
             };
-			
+
             request(fpRequest)
                 .then(function (fpResponse) {
                     var fpResponseItems = JSON.parse(fpResponse).items;
                     var items = [];
 
                     for (var i = 0; i < fpResponseItems.length; i++) {
-                        var currentItem = fpResponseItems[i];
-                        if (currentItem.type === "RESORT") {
-                            items.push({
-                                id: parseInt(currentItem.accommodations[0].facility.split(';')[0]),
-                                name: '',
-                                startDateTime: currentItem.startDateTime,
-                                endDateTime: currentItem.endDateTime,
-                                type: 'resort'
-                            });
-                        } else if (currentItem.type === "FASTPASS") {
-                            items.push({
-                                id: parseInt(currentItem.facility.split(';')[0]),
-                                name: '',
-                                startDateTime: currentItem.startDateTime,
-                                endDateTime: currentItem.endDateTime,
-                                type: currentItem.facility.split('=')[1]
-                            });
-                        } else if (currentItem.type === "DINING") {
-                            items.push({
-                                id: parseInt(currentItem.asset.split(';')[0]),
-                                name: '',
-                                startDateTime: currentItem.startDateTime,
-                                type: currentItem.asset.split('=')[1]
-                            });
+                        var current_item = fpResponseItems[i];
+                        var itinerary_item = {};
+                        if (current_item.type === "RESORT") {
+                            itinerary_item = buildResort(current_item);
+                        } else if (current_item.type === "FASTPASS") {
+                            itinerary_item = buildFastPass(current_item);
+                        } else if (current_item.type === "DINING") {
+                            itinerary_item = buildDining(current_item);
                         }
+
+                        updateFacilityInfo(itinerary_item);
+                        items.push(itinerary_item);
                     }
 
                     res.send(items);
@@ -106,5 +94,42 @@ app.get('/fastpass', function (req, res) {
             });
         });
 });
+
+function buildResort(item) {
+    return {
+        id: parseInt(item.accommodations[0].facility.split(';')[0]),
+        name: '',
+        startDateTime: item.startDateTime,
+        endDateTime: item.endDateTime,
+        type: 'resort'
+    };
+}
+
+function buildFastPass(item) {
+    return {
+        id: parseInt(item.facility.split(';')[0]),
+        name: '',
+        startDateTime: item.startDateTime,
+        endDateTime: item.endDateTime,
+        type: item.facility.split('=')[1]
+    };
+}
+
+function buildDining(item) {
+    return {
+        id: parseInt(item.asset.split(';')[0]),
+        name: '',
+        startDateTime: item.startDateTime,
+        type: item.asset.split('=')[1]
+    };
+}
+
+function updateFacilityInfo(item) {
+    for (var i = 0; i < facilities.length; i++) {
+        if (facilities[i].id === item.id) {
+            item.name = facilities[i].name;
+        }
+    }
+}
 
 app.listen(process.env.port || 8000);
