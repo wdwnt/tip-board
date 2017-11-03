@@ -30,16 +30,21 @@ var TipBoard = (function () {
         } else {
 			
 			var timezoneUrl = 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json';
-			
-			alert(
-				"timezone url: " + timezoneUrl + "\n" +
-				"language: " + window.navigator.language + "\n"
-			);
+		
+			alert("data.formatted: " + data.formatted);
+		
+			var date = new Date(data.formatted);
+		
+			if (date === undefined || date === null) {
+				alert("date obj is invalid");
+			} else {
+				alert("date obj is valid");
+			}
 			
             $.ajax({
                 url: timezoneUrl,
                 success: function (data) {
-                    var date = new Date(data.formatted);
+                    // var date = new Date(data.formatted);
                     var language = window.navigator.language;
 
                     var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
