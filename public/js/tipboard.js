@@ -1,5 +1,5 @@
 var TipBoard = (function () {
-    var thisAudioPlayer, thisDestination, thisTimeZoneApiKey, latitude, longitude;
+    var thisAudioPlayer, thisDestination, thisTimeZoneApiKey, thisLatitude, thisLongitude;
     var baseMp3Url = 'https://wdwntnow.oseast-us-1.phoenixnap.com/music/today_at_wdw/';
     var songIndex = 1;
     var parkHoursData = [];
@@ -28,16 +28,16 @@ var TipBoard = (function () {
         if (thisTimeZoneApiKey === undefined || thisTimeZoneApiKey === '') {
             return;
         } else {
-			
-			var timezoneUrl = 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey + '&by=position&lat=' + latitude + '&lng=' + longitude + '&format=json';
-			
+            var timezoneUrl = 'https://api.timezonedb.com/v2/get-time-zone?key=' + thisTimeZoneApiKey +
+                '&by=position&lat=' + thisLatitude + '&lng=' + thisLongitude + '&format=json';
+
             $.ajax({
                 url: timezoneUrl,
                 success: function (data) {
-					
+
                     var date = new Date(data.formatted.replace(" ", "T"));
                     var language = window.navigator.language;
-					
+
                     var currentDayOfWeek = date.toLocaleString(language, { weekday: 'long' });
                     var currentMonthAndDay = date.toLocaleString(language, { month: 'long', day: '2-digit' });
                     $('#current-date').html(currentDayOfWeek + '<br />' + currentMonthAndDay);
@@ -64,16 +64,12 @@ var TipBoard = (function () {
             url: 'https://wdwntnowapi.azurewebsites.net/api/v2/mobile/parks/' + thisDestination,
             success: function (data) {
                 updateParkHoursData(data);
-                getCurrentTime();
             }
         });
     }
 
     function updateParkHoursData(data) {
         parkHoursData = data;
-        latitude = data[0].latitude;
-        longitude = data[0].longitude;
-
         var output = '';
 
         $.each(data, function (index, park) {
@@ -98,11 +94,14 @@ var TipBoard = (function () {
         $('#hours').html(currentPark.todaysHours);
     }
 
-    function init(audioPlayer, destination, timeZoneApiKey) {
+    function init(audioPlayer, destination, timeZoneApiKey, latitude, longitude) {
         thisAudioPlayer = audioPlayer;
         thisDestination = destination;
         thisTimeZoneApiKey = timeZoneApiKey;
+        thisLatitude = latitude;
+        thisLongitude = longitude;
 
+        getCurrentTime();
         setupAudioPlayer();
         getWeather();
         getParkHours();
