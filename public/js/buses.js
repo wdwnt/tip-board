@@ -141,6 +141,7 @@ var Buses = (function () {
         setInterval(getCurrentTime, 30000);
         setInterval(getWeather, 600000);
         setInterval(getParkHours, 3600000);
+		setInterval(getBusTimes, 300000);
     };
 
     return {
