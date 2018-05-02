@@ -9,31 +9,80 @@ app.use('/static', express.static(__dirname + '/public'));
 var time_zone_api_key = process.env.time_zone_api_key || '';
 
 app.get('/', function (req, res) {
-    res.render('index_wdw', { timeZoneApiKey: time_zone_api_key });
+    res.render('index_tipboard', {
+        destination: 'wdw',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 28.4160036778,
+        longitude: -81.5811902834
+    });
 });
 
-app.get('/wdw', function (req, res) {
-    res.render('index_wdw', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/wdw', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'wdw',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 28.4160036778,
+        longitude: -81.5811902834
+    });
 });
 
-app.get('/dlr', function (req, res) {
-    res.render('index_dlr', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/dlr', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'dlr',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 33.8095545068,
+        longitude: -117.9189529669
+    });
 });
 
-app.get('/tdr', function (req, res) {
-    res.render('index_tdr', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/tdr', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'tdr',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 35.6329,
+        longitude: 139.8804
+    });
 });
 
-app.get('/dlp', function (req, res) {
-    res.render('index_dlp', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/dlp', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'dlp',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 48.870205,
+        longitude: 2.779913
+    });
 });
 
-app.get('/hkdl', function (req, res) {
-    res.render('index_hkdl', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/hkdl', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'hkdl',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 22.313131,
+        longitude: 114.044517
+    });
 });
 
-app.get('/shdr', function (req, res) {
-    res.render('index_shdr', { timeZoneApiKey: time_zone_api_key });
+app.get('/tipboard/shdr', function (req, res) {
+    res.render('index_tipboard', {
+        destination: 'shdr',
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 31.147097966725,
+        longitude: 121.66901898194
+    });
+});
+
+app.get('/buses/wdw/:resortId?/:busStopId?', function (req, res) {
+    var resortId = req.params.resortId || 80010397;
+    var busStopId = req.params.busStopId || 19893;
+
+    res.render('index_buses', {
+        destination: 'wdw',
+        resortId,
+        busStopId,
+        timeZoneApiKey: time_zone_api_key,
+        latitude: 28.4160036778,
+        longitude: -81.5811902834
+    });
 });
 
 app.get('/fastpass', function (req, res) {

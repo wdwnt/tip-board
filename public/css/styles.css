@@ -9,7 +9,7 @@ body {
 }
 
 .bg {
-    background-color: #89c8ff;
+    background-color: #cce7ff;
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -84,4 +84,86 @@ body {
 
 #todays-park-hours-label {
     display: none;
+}
+
+/* Facilities */
+#bus-stop-name {
+    display: inline-block;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    font-size: 3vw;
+    font-weight: 300;
+    padding: 8px;
+}
+
+.header-content #current-time, 
+.header-content #current-date, 
+.header-content #weather-today, 
+.header-content #weather-tomorrow {
+    float: right;
+    font-weight: 300;
+    padding: 8px;
+}
+
+.header-content #current-time {
+    font-size: 3vw;
+}
+
+.bus-message {
+    font-size: 24px;
+}
+
+.bus-time {
+    text-transform: uppercase;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.facility {
+    background: #0088ff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+}
+
+.header-content {
+    color: #0088ff;
+    padding: 0;
+}
+
+.park-hours {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    min-height: 75px;
+}
+
+.park-name {
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+    font-weight: 300;
+    margin: 0px 0px 16px 0px;
+    min-height: 75px;
+    padding: 0;
+}
+
+.tile-content {
+    background-color: rgba(0,136,255,.6);
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+    position: absolute;
+    vertical-align: bottom;
+    width: 100%;
+}
+
+.weather-header {
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    font-weight: 500;
 }
